@@ -14,7 +14,7 @@ import AdminPredictCongestion from './pages/AdminPredictCongestion'
 import AdminUtilisateurs from './pages/AdminUtilisateurs'
 import AdminMarchandises from './pages/AdminMarchandises'
 import AdminStockage from './pages/AdminStockage'
-
+import AgentLayout from './pages/AgentLayout'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,13 +37,20 @@ function App() {
           <Route path="marchandises" element={<AdminMarchandises />} />
           <Route path="stockage" element={<AdminStockage />} />
         </Route>
+        {/* Agent routes */}
+        <Route path="/user/dashboard" element={
+          <ProyectedRoutes requireRole={['agent']}>
+            <AgentLayout />
+          </ProyectedRoutes>
+        }>
+          <Route index element={<Dashboard />} />
+          <Route path="predict-congestion" element={<AdminPredictCongestion />} />
+        </Route>
         <Route
          index
          element={<h1>Summary of dashboard</h1>} />
-        <Route path="/user/dashboard" element={<h1>User Dashboard</h1>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/unauthorized" element={<h1 className='font -bold text -3xl mt-20 ml-20'>Unauthorized</h1>} />
-
       </Routes>
     </Router>
 
