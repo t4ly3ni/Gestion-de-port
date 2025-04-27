@@ -11,7 +11,7 @@ const ProyectedRoutes = ({ children , requireRole }) => {
     if (!user) {
       navigate('/login');
       return;
-    } else if (requireRole && user.role !== requireRole) {
+    } else if (requireRole && !requireRole.includes(user.role)) {
       navigate('/unauthorized');
       return;
     }
@@ -19,10 +19,10 @@ const ProyectedRoutes = ({ children , requireRole }) => {
   if (!user) {
     return null; 
   }
-  if(!requireRole.icludes(user.role)){
+  if (requireRole && !requireRole.includes(user.role)) {
     return null; 
   }
-    return children;
+  return children;
 }
 
 export default ProyectedRoutes;
