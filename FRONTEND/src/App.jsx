@@ -6,6 +6,14 @@ import Root from './components/root'
 import Login from './pages/Login'
 import ProyectedRoutes from './utils/ProtectedRoutes'
 import Dashboard from './pages/Dashboard'
+import AdminAlerts from './pages/AdminAlerts'
+import AdminLayout from './pages/AdminLayout'
+import AdminQuais from './pages/AdminQuais'
+import AdminNavires from './pages/AdminNavires'
+import AdminPredictCongestion from './pages/AdminPredictCongestion'
+import AdminUtilisateurs from './pages/AdminUtilisateurs'
+import AdminMarchandises from './pages/AdminMarchandises'
+import AdminStockage from './pages/AdminStockage'
 
 
 function App() {
@@ -17,10 +25,19 @@ function App() {
         <Route path="/" element={<Root />} />
         <Route path="/admin/dashboard" element={
           <ProyectedRoutes requireRole={['admin']}>
-            <Dashboard />
+            <AdminLayout />
           </ProyectedRoutes>
-        } />
-         <Route
+        }>
+          <Route index element={<Dashboard />} />
+          <Route path="alerts" element={<AdminAlerts />} />
+          <Route path="quais" element={<AdminQuais />} />
+          <Route path="navires" element={<AdminNavires />} />
+          <Route path="predict-congestion" element={<AdminPredictCongestion />} />
+          <Route path="utilisateurs" element={<AdminUtilisateurs />} />
+          <Route path="marchandises" element={<AdminMarchandises />} />
+          <Route path="stockage" element={<AdminStockage />} />
+        </Route>
+        <Route
          index
          element={<h1>Summary of dashboard</h1>} />
         <Route path="/user/dashboard" element={<h1>User Dashboard</h1>} />

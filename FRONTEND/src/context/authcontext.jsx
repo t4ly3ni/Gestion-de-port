@@ -1,4 +1,5 @@
 import { createContext, use, useState, useContext } from "react";
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -13,7 +14,12 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("pos-user", JSON.stringify(userData));
         localStorage.setItem("pos-token", token);
     }
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await axios.post('/api/auth/logout');
+        } catch (e) {
+            // Ignore errors, just clear local state
+        }
         setUser(null);
         localStorage.removeItem("pos-user");
         localStorage.removeItem("pos-token");
@@ -23,8 +29,6 @@ export const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     )
-   
-
 }
 
 export const useAuth = () => useContext(AuthContext);

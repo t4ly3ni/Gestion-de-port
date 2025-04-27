@@ -1,8 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import {LayoutDashboard,ActivitySquare,Bell,Anchor,Ship,Users,Package, Warehouse} from "lucide-react";
+import { NavLink, useNavigate } from 'react-router-dom';
+import {LayoutDashboard,ActivitySquare,Bell,Anchor,Ship,Users,Package, Warehouse, LogOut} from "lucide-react";
+import { useAuth } from '../context/authcontext.jsx';
 
 const Sidebar = () => {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
     const menuItems = [
         { label: "Tableau de bord", icon: <LayoutDashboard />, path: "/admin/dashboard" },
         { label: "Prédire la congestion", icon: <ActivitySquare />, path: "/admin/dashboard/predict-congestion" },
@@ -24,13 +27,21 @@ const Sidebar = () => {
             <ul className='space-y-2 p-2'>
                 {menuItems.map((item, index) => (
                     <li key={item.label}>
-        
                         <NavLink className={({ isActive }) => (isActive ? "bg-gray-700 text-white flex items-center p-2 rounded-md" : "flex items-center p-2 rounded-md hover:bg-gray-700 hover:text-white")} to={item.path}>
                             <span className='text-xl'>{item.icon}</span>
                             <span className='hidden md:block'>{item.label}</span>
                         </NavLink>
                     </li>
                 ))}
+                <li>
+                    <button
+                        className="flex items-center p-2 rounded-md hover:bg-gray-700 hover:text-white w-full mt-8"
+                        onClick={async () => { await logout(); navigate('/login'); }}
+                    >
+                        <span className='text-xl'><LogOut /></span>
+                        <span className='hidden md:block'>Se déconnecter</span>
+                    </button>
+                </li>
             </ul>
         </div>
 
