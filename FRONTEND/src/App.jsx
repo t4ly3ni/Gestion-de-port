@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import './index.css'
 import Root from './components/root'
@@ -22,7 +22,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Root />} />
+        {/* Redirect root to /login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/admin/dashboard" element={
           <ProyectedRoutes requireRole={['admin']}>
             <AdminLayout />

@@ -9,5 +9,6 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:3000',
     },
+    open: '/login', // Open /login by default
   },
 })
