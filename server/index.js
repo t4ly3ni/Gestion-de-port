@@ -11,11 +11,21 @@ import marchandiseRoutes from './routes/marchandise.js';
 import zoneStockageRoutes from './routes/zone_stockage.js';
 import tempsRoutes from './routes/temps.js';
 import dotenv from 'dotenv';
+import http from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 dotenv.config();
 
-
-
 const app = express();
+const server = http.createServer(app);
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+
+app.set('io', io); // Make io accessible in controllers
+
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
@@ -27,11 +37,8 @@ app.use('/api/marchandise', marchandiseRoutes);
 app.use('/api/zone_stockage', zoneStockageRoutes);
 app.use('/api/temps', tempsRoutes);
 
-
-
-app.listen(process.env.port, () => {
+server.listen(process.env.port, () => {
     connectDB();
     console.log('Connected to MongoDB');
     console.log('Server is running on http://localhost:3000');
-}
-);
+});

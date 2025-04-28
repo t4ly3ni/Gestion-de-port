@@ -4,7 +4,7 @@ const AlerteSchema = new mongoose.Schema({
   type: { type: String, required: true },
   message: { type: String, required: true },
   niveau: { type: String, required: true },
-});
+}, { timestamps: true });
 
 const Alerte = mongoose.model("Alerte", AlerteSchema);
 export default Alerte;

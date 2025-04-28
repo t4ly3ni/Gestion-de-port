@@ -8,7 +8,6 @@ const AgentSidebar = () => {
     const navigate = useNavigate();
     const menuItems = [
         { label: "Tableau de bord", icon: <LayoutDashboard />, path: "/user/dashboard" },
-        { label: "Prédire la congestion", icon: <ActivitySquare />, path: "/user/dashboard/predict-congestion" },
     ];
     return (
         <div className='flex flex-col h-screen bg-blue-900 text-white w-16 md:w-64 fixed'>

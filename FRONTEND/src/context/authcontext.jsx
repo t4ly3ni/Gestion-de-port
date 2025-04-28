@@ -6,7 +6,11 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         const storedUser = localStorage.getItem("pos-user");
-        return storedUser ? JSON.parse(storedUser) : null;
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            return parsedUser.role === 'agent' || parsedUser.role === 'admin' ? parsedUser : null;
+        }
+        return null;
     });
 
     const login = (userData, token) => {
