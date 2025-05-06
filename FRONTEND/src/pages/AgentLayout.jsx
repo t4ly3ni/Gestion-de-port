@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import NotificationPopup from '../components/NotificationPopup';
 import { io } from 'socket.io-client';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const SOCKET_URL = 'http://localhost:3000';
 
@@ -55,6 +56,7 @@ const AgentLayout = () => {
     <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <AgentSidebar />
       <main className="flex-1 ml-16 md:ml-64">
+        <Navbar />
         <NotificationPopup alert={alert} onClose={() => setAlert(null)} onConsulter={handleConsulter} />
         {showAlertsList && (
           <div className="fixed inset-0 bg-black bg-opacity-30 z-40 flex items-center justify-center">
