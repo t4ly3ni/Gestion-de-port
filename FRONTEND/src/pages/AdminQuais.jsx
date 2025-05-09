@@ -5,7 +5,7 @@ const initialForm = { nom: '', etat: '' };
 
 const AdminQuais = () => {
   const [form, setForm] = useState(initialForm);
-  const [quais, setQuais] = useState([]);
+  const [poste, setPoste] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -13,17 +13,17 @@ const AdminQuais = () => {
   const [editForm, setEditForm] = useState(initialForm);
   const editNomRef = useRef(null);
 
-  const fetchQuais = async () => {
+  const fetchPoste = async () => {
     try {
       const res = await axios.get('/api/poste');
-      setQuais(res.data.postes || []);
+      setPoste(res.data.postes || []);
     } catch (err) {
-      setError('Erreur lors du chargement des quais.');
+      setError('Erreur lors du chargement du poste.');
     }
   };
 
   useEffect(() => {
-    fetchQuais();
+    fetchPoste();
   }, []);
 
   useEffect(() => {
@@ -47,30 +47,30 @@ const AdminQuais = () => {
     setSuccess('');
     try {
       await axios.post('/api/poste', form);
-      setSuccess('Quai ajouté avec succès!');
+      setSuccess('Poste ajouté avec succès!');
       setForm(initialForm);
-      fetchQuais();
+      fetchPoste();
     } catch (err) {
-      setError("Erreur lors de l'ajout du quai.");
+      setError("Erreur lors de l'ajout du poste.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Supprimer ce quai ?')) return;
+    if (!window.confirm('Supprimer ce poste ?')) return;
     try {
       await axios.delete(`/api/poste/${id}`);
-      setSuccess('Quai supprimé.');
-      fetchQuais();
+      setSuccess('Poste supprimé.');
+      fetchPoste();
     } catch (err) {
       setError('Erreur lors de la suppression.');
     }
   };
 
-  const startEdit = (quai) => {
-    setEditingId(quai._id);
-    setEditForm({ nom: quai.nom, etat: quai.etat });
+  const startEdit = (posteItem) => {
+    setEditingId(posteItem._id);
+    setEditForm({ nom: posteItem.nom, etat: posteItem.etat });
   };
 
   const handleEdit = async (e) => {
@@ -80,9 +80,9 @@ const AdminQuais = () => {
     setSuccess('');
     try {
       await axios.put(`/api/poste/${editingId}`, editForm);
-      setSuccess('Quai modifié avec succès!');
+      setSuccess('Poste modifié avec succès!');
       setEditingId(null);
-      fetchQuais();
+      fetchPoste();
       setTimeout(() => setSuccess(''), 2000);
     } catch (err) {
       setError('Erreur lors de la modification.');
@@ -94,7 +94,7 @@ const AdminQuais = () => {
 
   return (
     <div className="max-w-7xl mx-auto mt-16 bg-gradient-to-br from-blue-100 to-blue-50 p-14 rounded-3xl shadow-2xl border border-blue-200">
-      <h2 className="text-5xl font-extrabold mb-14 text-blue-900 text-center tracking-tight drop-shadow">Gérer les quais</h2>
+      <h2 className="text-5xl font-extrabold mb-14 text-blue-900 text-center tracking-tight drop-shadow">Gérer le quai</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20 bg-white p-10 rounded-3xl shadow-lg border border-blue-100">
         <div>
           <label className="block mb-2 text-xl font-bold text-blue-800">Nom</label>
@@ -122,13 +122,13 @@ const AdminQuais = () => {
             className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-12 py-4 rounded-2xl text-xl font-bold shadow-lg hover:from-blue-700 hover:to-blue-500 transition-colors w-full md:w-auto"
             disabled={loading}
           >
-            {loading ? 'Ajout...' : 'Ajouter le quai'}
+            {loading ? 'Ajout...' : 'Ajouter le poste'}
           </button>
         </div>
         {success && <div className="text-green-600 mt-4 text-xl md:col-span-2 text-center font-semibold">{success}</div>}
         {error && <div className="text-red-600 mt-4 text-xl md:col-span-2 text-center font-semibold">{error}</div>}
       </form>
-      <h3 className="text-3xl font-bold mb-10 text-blue-800 text-center">Liste des quais</h3>
+      <h3 className="text-3xl font-bold mb-10 text-blue-800 text-center">Liste des postes</h3>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border-2 border-blue-200 rounded-2xl shadow-lg text-lg">
           <thead>
@@ -139,9 +139,9 @@ const AdminQuais = () => {
             </tr>
           </thead>
           <tbody>
-            {quais.map(quai => (
-              <tr key={quai._id} className={`border-b ${editingId === quai._id ? 'bg-blue-50' : ''} hover:bg-blue-50 transition-colors`}>
-                {editingId === quai._id ? (
+            {poste.map(posteItem => (
+              <tr key={posteItem._id} className={`border-b ${editingId === posteItem._id ? 'bg-blue-50' : ''} hover:bg-blue-50 transition-colors`}>
+                {editingId === posteItem._id ? (
                   <>
                     <td className="py-3 px-6">
                       <input
@@ -181,15 +181,15 @@ const AdminQuais = () => {
                   </>
                 ) : (
                   <>
-                    <td className="py-3 px-6 text-lg font-semibold">{quai.nom}</td>
-                    <td className="py-3 px-6 text-lg">{quai.etat}</td>
+                    <td className="py-3 px-6 text-lg font-semibold">{posteItem.nom}</td>
+                    <td className="py-3 px-6 text-lg">{posteItem.etat}</td>
                     <td className="py-3 px-6 text-center flex gap-2 justify-center">
                       <button
-                        onClick={() => startEdit(quai)}
+                        onClick={() => startEdit(posteItem)}
                         className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-lg font-semibold hover:bg-yellow-700 shadow"
                       >Modifier</button>
                       <button
-                        onClick={() => handleDelete(quai._id)}
+                        onClick={() => handleDelete(posteItem._id)}
                         className="bg-red-500 text-white px-4 py-2 rounded-lg text-lg font-semibold hover:bg-red-700 shadow"
                       >Supprimer</button>
                     </td>

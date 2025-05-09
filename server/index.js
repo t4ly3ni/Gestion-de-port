@@ -10,6 +10,7 @@ import userRoutes from './routes/user.js';
 import marchandiseRoutes from './routes/marchandise.js';
 import zoneStockageRoutes from './routes/zone_stockage.js';
 import tempsRoutes from './routes/temps.js';
+import congestionRoutes from './routes/congestion.js';
 import dotenv from 'dotenv';
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
@@ -36,9 +37,9 @@ app.use('/api/user', userRoutes);
 app.use('/api/marchandise', marchandiseRoutes);
 app.use('/api/zone_stockage', zoneStockageRoutes);
 app.use('/api/temps', tempsRoutes);
+app.use('/api/congestion', congestionRoutes);
 
-server.listen(process.env.port, () => {
+server.listen(process.env.PORT || 3000, () => {
     connectDB();
-    console.log('Connected to MongoDB');
-    console.log('Server is running on http://localhost:3000');
+    console.log(`Server is running on http://localhost:${process.env.PORT || 3000}`);
 });

@@ -11,7 +11,7 @@ const Sidebar = () => {
         { label: "Tableau de bord", icon: <LayoutDashboard />, path: "/admin/dashboard" },
         { label: "Prédire la congestion", icon: <ActivitySquare />, path: "/admin/dashboard/predict-congestion" },
         { label: "Consulter les alertes", icon: <Bell />, path: "/admin/dashboard/alerts" },
-        { label: "Gérer les quais", icon: <Anchor />, path: "/admin/dashboard/quais" },
+        { label: "Gérer le quai", icon: <Anchor />, path: "/admin/dashboard/quais" },
         { label: "Gérer les navires", icon: <Ship />, path: "/admin/dashboard/navires" },
         { label: "Gérer les utilisateurs", icon: <Users />, path: "/admin/dashboard/utilisateurs" },
         { label: "Gérer les marchandises", icon: <Package />, path: "/admin/dashboard/marchandises" },

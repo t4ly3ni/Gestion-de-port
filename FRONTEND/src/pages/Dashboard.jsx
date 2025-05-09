@@ -109,7 +109,7 @@ const Dashboard = () => {
         <>
           <div className="flex flex-col md:flex-row gap-8 mb-12">
             <div className="flex-1 bg-blue-50 rounded-xl p-4 shadow">
-              <h2 className="text-xl font-semibold mb-4 text-blue-800">Taux d'occupation des quais</h2>
+              <h2 className="text-xl font-semibold mb-4 text-blue-800">Taux d'occupation du quai</h2>
               <Pie data={portOccupancyData} />
             </div>
             <div className="flex-1 bg-blue-50 rounded-xl p-4 shadow">
@@ -123,7 +123,7 @@ const Dashboard = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-gray-50 rounded-xl p-4 shadow overflow-x-auto mt-6">
-              <h3 className="text-lg font-bold mb-4 text-blue-900">Liste des quais</h3>
+              <h3 className="text-lg font-bold mb-4 text-blue-900">Liste des postes</h3>
               <div className="w-full min-w-[600px]">
                 <table className="w-full text-base border-separate border-spacing-y-2">
                   <thead>
